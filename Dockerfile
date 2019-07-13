@@ -13,4 +13,4 @@ RUN chmod 2775 /var/www/
 RUN chmod ug+rw /var/www/
 EXPOSE 80
 
-#CMD /usr/sbin/apache2ctl -D FOREGROUND
+CMD /usr/sbin/apache2ctl -D FOREGROUND
