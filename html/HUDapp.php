@@ -1,10 +1,10 @@
-<!-- 
+<!--
 ////////////////////////////////////////////
 //
 // APPS TAB
 //
 // AUTHOR: ADAM TELFORD
-// 
+//
 // THIS FILE DISPLAYS THE CONTENTS OF THE
 // APPS TAB.
 //
@@ -17,17 +17,18 @@
     <?php
     $wd_tierobj = [];
     if(file_exists($wd_admin . test_input($wd_tier) . '.json')){
-        
+
         $wd_tierobj = json_decode(file_get_contents($wd_admin . test_input($wd_tier) . '.json'));
-        
+
     }
-    
+
     for($x = 0; $x < 2; $x ++){
         $app_type = ($x == 0) ? "Apps" : "MyApps";
         ?>
         <?php echo ($x == 1) ? "<h5 class='mx-3 mt-3'>My Apps</h5>" : "" ?>
         <div class="row mx-3 defaultHUD_app-container <?php echo ($x == 0) ? "border-bottom" : "" ?>">
             <?php
+          if(is_dir($app_type . '/')){
             foreach (scandir($app_type . '/') as $entry){
                 if ($entry != "." && $entry != "..") {
                     $app_name = $entry;
@@ -38,7 +39,7 @@
                             $app_name = $app_info["name"];
                         if(is_array($app_info) && !empty($app_info["description"]))
                             $app_description = $app_info["description"];
-                            
+
                         if(!empty($app_info["require"]["AppEngine"]))
                             $default_icon = "MyApps/AppEngine/template_files/AppEngine_DefaultAppIcon.png";
                         else
@@ -54,15 +55,18 @@
                     <?php
                 }
             }
-            if( (count(scandir($app_type . '/')) == 0) && ($x == 1) ){
+    }
+      if(is_dir($app_type . '/')){
+      if( (count(scandir($app_type . '/')) == 0) && ($x == 1) ){
               ?>
               <div class="text-muted my-4">You have no apps</div>
               <?php
             }
+    }
             ?>
         </div>
         <?php
     }
     ?>
-    
+
 </div>
