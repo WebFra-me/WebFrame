@@ -1,13 +1,14 @@
 <?php
 session_start();
-function test_input($data) {
+include "testInput.php";
+/*function test_input($data) {
   if (!empty($data)) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
   }
-}
+}*/
 require_once 'Plugins/htmlpurifier/library/HTMLPurifier.auto.php';
 $config = HTMLPurifier_Config::createDefault();
 $purifier = new HTMLPurifier($config);
@@ -50,10 +51,12 @@ if((isset($wd_roots[$_SERVER['HTTP_HOST']]) && file_exists($wd_roots[$_SERVER['H
   }
   if(isset($_GET['page']) && $page != "login.php"){
     if(file_exists($wd_root . '/Cache/' . $page)){
-      header("Expires: " . gmdate("D, d M Y H:i:s", time() + 86400) . " GMT");
+      /*header("Expires: " . gmdate("D, d M Y H:i:s", time() + 86400) . " GMT");
       header("Pragma: cache");
       header("Cache-Control: public, max-age=86400");
       header("Etag: " . md5($page . filemtime($wd_root . '/Cache/' . $page)));
+      //$bob = file_get_contents('http://' . $_SERVER['HTTP_HOST'] . '/cache.php?page=index.php&wd_no-cache=' . $theme);
+      //file_put_contents($wd_root . '/Cache/' . $page, $bob);
       $f = fopen($wd_root . '/Cache/' . $page, 'r');
       $buffer = '';
       while(!feof($f)) {
@@ -61,7 +64,8 @@ if((isset($wd_roots[$_SERVER['HTTP_HOST']]) && file_exists($wd_roots[$_SERVER['H
       }
       fclose($f);
       echo $buffer;
-      exit();
+      exit();*/
+      require "www/Themes/" . $theme . "/default.php";
     }
     else{
       if(file_exists($wd_www . "404.php")){
