@@ -1,4 +1,3 @@
-#FROM php:7.2-apache
 FROM ubuntu:latest
 MAINTAINER Adam Telford <info@webfra.me>
 
@@ -12,6 +11,8 @@ RUN chmod -R g+w /var/www/
 RUN chown -R www-data /var/www/
 RUN chmod 2775 /var/www/
 RUN chmod ug+rw /var/www/
+RUN apt-get -y install cron
+RUN (crontab -l ; echo "* * * * * php /var/www/html/cronJob.php") | crontab
 EXPOSE 80
 
 CMD /usr/sbin/apache2ctl -D FOREGROUND
